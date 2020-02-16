@@ -20,6 +20,7 @@ gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.7'
 gem 'simple_form', '~> 5.0.2'
 gem 'bootstrap-sass', '~> 3.4.1'
+gem 'devise', '~> 4.7.1'
 
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
