@@ -1,29 +1,35 @@
 class ItemsController < ApplicationController
-
+	
 	before_action  :find_item, only: [:show, :edit, :update, :destroy]
 
 	def index
-		@items = Item.all.order("created_at DESC")	
-	end
-
-	def show		
+		if user_signed_in?
+			@items = Item.where(:user_id => current_user.id).order("created_at DESC")
+		end	
 	end
 
 	def new
-		@item = Item.new 		
+		@item = current_user.items.build
 	end
 
 	def create
-		@item = Item.new(item_params) 
+		@item = current_user.items.build(item_params)
 		if @item.save
 			redirect_to root_path
 		else
 			render 'new'
 		end
-		
 	end
 
-	def edit		
+	def show
+	end
+
+	def edit
+	end
+
+	def destroy
+			@item.destroy
+			redirect_to root_path
 	end
 
 	def update
@@ -31,23 +37,16 @@ class ItemsController < ApplicationController
 			redirect_to item_path(@item)
 		else
 			reder 'edit'
-		end		
+		end
 	end
 
-	def destroy
-		@item.destroy
-		redirect_to root_path
-	end
-
-	private 
+	private
 
 	def item_params
 		params.require(:item).permit(:title, :description)
-		
 	end
 
 	def find_item
-		@item = Item.find(params[:id]) 
-		
+		@item = Item.find(params[:id])
 	end
 end
