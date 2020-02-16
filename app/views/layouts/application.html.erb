@@ -2,18 +2,39 @@
 <html>
   <head>
     <title>Hiptime</title>
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
-
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= csrf_meta_tags %>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
   </head>
-
   <body>
-    
-  <p class="notice"><%= notice %></p>
-  <p class="alert"><%= alert %></p>
+    <nav class="navbar navbar-default">
+      <div class="container">
+        <div class="navbar-header">
+          <%= link_to "Hiptime", root_path, class:"navbar-brand" %>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+          <% if current_user.present? %>
+            <li><%= link_to "Sign Out", destroy_user_session_path, method: :delete %>
+            </li>
+          <% else %>
+            <li><%= link_to "Log in", new_user_session_path %></li>
+            <li><%= link_to "Sing Up", new_user_registration_path %></li>
+          <% end %>
 
-    <%= yield %>
+        </ul>
+        <% if user_signed_in? %>
+          <%= link_to "Create Item", new_item_path, class: "navbar-text navbar-link" %>
+        <% end %>
+      </div>  
+    </nav>
+
+    <p class="notice"><%= notice %></p> 
+    <p class="alert"><%= alert %></p>
+
+    <div class="container">
+      <%= yield %>
+    </div>
   </body>
 </html>
